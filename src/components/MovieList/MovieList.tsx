@@ -1,11 +1,11 @@
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { Dimensions } from 'react-native';
 
-import { IMovieDetails } from '../../types/domain';
+import { IMovieListItem } from '../../types/domain';
 import MovieItem from './MovieItem';
 
 interface IMovieListProps {
-  data: IMovieDetails[];
+  data: IMovieListItem[];
   onSelectMovie: (id: string) => void;
 }
 const { height, width } = Dimensions.get('window');
@@ -17,7 +17,7 @@ const MovieList = ({ data, onSelectMovie }: IMovieListProps) => {
       <FlatList
         data={data}
         numColumns={numColumns}
-        keyExtractor={(item: IMovieDetails) => `${item.id}`}
+        keyExtractor={(item: IMovieListItem) => `${item.id}`}
         renderItem={({ item }) => (
           <MovieItem onSelectMovie={onSelectMovie} {...item} />
         )}
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontFamily: 'SourceSansPro-Black',
     marginLeft: 10,
   },
   titleContainer: {

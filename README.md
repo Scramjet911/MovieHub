@@ -52,7 +52,7 @@ If everything is set up _correctly_, you should see your new app running in your
 ## Current Progress
 - [x] Navigation, color scheme setup
 - [x] Landing page UI
-- [ ] Movie details page UI
+- [x] Movie details page UI
 - [ ] Redux state management
 - [ ] Landing page api integration
 - [ ] Movie details page api integration
