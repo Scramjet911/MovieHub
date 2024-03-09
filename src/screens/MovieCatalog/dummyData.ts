@@ -1,6 +1,6 @@
-import { IMovieDetails } from '../../types/domain';
+import { IMovieListItem } from '../../types/domain';
 
-const movieList: IMovieDetails[] = [
+const movieList: IMovieListItem[] = [
   {
     adult: false,
     backdrop_path: '/mDeUmPe4MF35WWlAqj4QFX5UauJ.jpg',

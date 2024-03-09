@@ -2,8 +2,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 
 import type { ApplicationStackParamList } from '../types/navigation';
-import { MovieCatalog } from '../screens';
-import colors from '../theme/colors';
+import { MovieCatalog, MovieDetails } from '../screens';
+import { colors } from '../theme';
 
 const Stack = createStackNavigator<ApplicationStackParamList>();
 
@@ -19,6 +19,11 @@ const RootNavigation = () => {
           name="MovieCatalog"
           component={MovieCatalog}
           options={{ title: 'Movie Catalog' }}
+        />
+        <Stack.Screen
+          name="MovieDetails"
+          component={MovieDetails}
+          options={{ title: 'Movie Details' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

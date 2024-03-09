@@ -1,6 +1,5 @@
 import { SafeAreaView, StatusBar } from 'react-native';
-
-import colors from '../../theme/colors';
+import { colors } from '../../theme';
 
 interface ISafeView {
   children: JSX.Element;

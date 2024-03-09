@@ -19,6 +19,7 @@ const colors = {
   gray200: '#9FADBC',
   gray100: '#C7D1DB',
   gray50: '#DEE4EA',
+  white: '#ffffff',
 };
 
 export default colors;

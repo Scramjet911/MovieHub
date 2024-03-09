@@ -1,9 +1,9 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { IMovieDetails } from '../../types/domain';
-import colors from '../../theme/colors';
+import { IMovieListItem } from '../../types/domain';
+import { colors } from '../../theme';
 
-interface IMovieItem extends IMovieDetails {
+interface IMovieItem extends IMovieListItem {
   onSelectMovie: (id: string) => void;
 }
 
@@ -21,10 +21,7 @@ const MovieItem = ({
           source={{ uri: `https://image.tmdb.org/t/p/w500/${poster_path}` }}
         />
         <View style={styles.movieInfo}>
-          <Text
-            style={styles.popularity}
-            ellipsizeMode="tail"
-            numberOfLines={1}>
+          <Text style={styles.votes} ellipsizeMode="tail" numberOfLines={1}>
             {vote_average}
           </Text>
         </View>
@@ -56,9 +53,8 @@ const styles = StyleSheet.create({
     height: 200,
     width: 125,
   },
-  popularity: {
+  votes: {
     color: colors.gray100,
-    fontFamily: 'SourceSansPro-Black',
     marginLeft: 5,
   },
 });
