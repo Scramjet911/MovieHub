@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { colors } from '../../theme';
-import { IMovieListItem } from '../../types/movie';
+import { colors } from '~/theme';
+import { IMovieListItem } from '~/types/movie';
 
 interface IMovieItem extends IMovieListItem {
   onSelectMovie: (id: string) => void;

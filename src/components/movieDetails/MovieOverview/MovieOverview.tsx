@@ -1,6 +1,11 @@
+/**
+ * @fileoverview MovieOverview component displays movie details
+ * like release date, runtime, and ratings.
+ */
+
 import { StyleSheet, Text, View } from 'react-native';
 
-import { colors } from '../../theme';
+import { colors } from '~/theme';
 
 interface MovieOverviewProps {
   date: string;
@@ -8,12 +13,18 @@ interface MovieOverviewProps {
   ratings?: number;
 }
 
+/**
+ * MovieOverview component
+ * @param {MovieOverviewProps} props - props containing the details of the movie
+ * @returns {JSX.Element} - A JSX.Element - the MovieOverview component.
+ */
 const MovieOverview: React.FC<MovieOverviewProps> = ({
   date,
   runtime,
   ratings,
 }) => (
   <View style={style.container}>
+    {/* Displaying release date in a readable format (March 2, 2024) */}
     <View style={style.infoItems}>
       <Text style={style.infoText}>
         {new Date(date).toLocaleDateString('en-US', {

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 
-import { colors } from '../../theme';
+import { colors } from '~/theme';
 
 interface AsyncImageProps extends ImageProps {
   source: { uri: string };
@@ -49,7 +49,9 @@ const AsyncImage = ({ source, style, ...props }: AsyncImageProps) => {
       )}
       <Image
         source={source}
-        style={[Styles.image, style]}
+        /* Hiding the image if it is loading, since it might show before the 
+        state has updated */
+        style={[Styles.image, style, isLoading && Styles.hidden]}
         onLoad={handleOnLoad}
         onError={handleOnError}
         {...props}
@@ -59,6 +61,9 @@ const AsyncImage = ({ source, style, ...props }: AsyncImageProps) => {
 };
 
 const Styles = StyleSheet.create({
+  hidden: {
+    display: 'none',
+  },
   loadingIndicator: {
     position: 'absolute',
     left: 0,

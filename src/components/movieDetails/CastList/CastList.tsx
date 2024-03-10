@@ -1,20 +1,32 @@
+/**
+ * @fileoverview CastList component renders a list of cast members
+ * with their images and names.
+ */
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-import { text } from '../../theme';
-import { ICast } from '../../types/movieDetails';
-import AsyncImage from '../AsyncImage/AsyncImage';
+import AsyncImage from '~/components/common/AsyncImage/AsyncImage';
+import { text } from '~/theme';
+import { ICast } from '~/types/movieDetails';
 
-const defaultProfilePath = require('../../assets/images/profile_avatar.png');
+const defaultProfilePath = require('~/assets/images/profile_avatar.png');
 
 interface CastListProps {
   title: string;
   items: ICast[];
 }
 
-const CastList = ({ title, items }: CastListProps) => (
+/**
+ * CastList component
+ * @param {string} title - The title of the cast list.
+ * @param {ICast[]} items - The array of cast members.
+ * @returns {JSX.Element} - A JSX.Element
+ */
+const CastList = ({ title, items }: CastListProps): JSX.Element => (
   <View>
     <Text style={[text.baseColor, text.headingText]}>{title}</Text>
+    {/* FlatList to render cast members to allow virtualization and load
+    only the ones present on screen */}
     <FlatList
       horizontal
       data={items}
