@@ -1,43 +1,46 @@
-import React from 'react';
-import { Image, Text, ScrollView, View, StyleSheet } from 'react-native';
-import { ICast } from '../../types/domain';
-import { text } from '../../theme';
-import AsyncImage from '../AsyncImage/AsyncImage';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+
+import { text } from '../../theme';
+import { ICast } from '../../types/movieDetails';
+import AsyncImage from '../AsyncImage/AsyncImage';
+
+const defaultProfilePath = require('../../assets/images/profile_avatar.png');
 
 interface CastListProps {
   title: string;
   items: ICast[];
 }
 
-const CastList = ({ title, items }: CastListProps) => {
-  return (
-    <View>
-      <Text style={[text.baseColor, text.headingText]}>{title}</Text>
-      <FlatList
-        horizontal
-        data={items}
-        renderItem={({ item }) => (
-          <View style={Style.castImageContainer}>
-            {item.profile_path ? (
-              <AsyncImage
-                style={Style.castImage}
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w500/${item.profile_path}`,
-                }}
-              />
-            ) : null}
-            <Text
-              style={[text.baseColor, text.normalText, Style.castImageText]}
-              numberOfLines={2}
-              ellipsizeMode="tail">
-              {item.name}
-            </Text>
-          </View>
-        )}></FlatList>
-    </View>
-  );
-};
+const CastList = ({ title, items }: CastListProps) => (
+  <View>
+    <Text style={[text.baseColor, text.headingText]}>{title}</Text>
+    <FlatList
+      horizontal
+      data={items}
+      renderItem={({ item }) => (
+        <View style={Style.castImageContainer}>
+          {item.profile_path ? (
+            <AsyncImage
+              style={Style.castImage}
+              source={{
+                uri: `${item.profile_path}`,
+              }}
+            />
+          ) : (
+            <Image style={Style.castImage} source={defaultProfilePath} />
+          )}
+          <Text
+            style={[text.baseColor, text.normalText, Style.castImageText]}
+            numberOfLines={2}
+            ellipsizeMode="tail">
+            {item.name}
+          </Text>
+        </View>
+      )}
+    />
+  </View>
+);
 
 const Style = StyleSheet.create({
   titleText: {

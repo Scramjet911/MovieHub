@@ -1,41 +1,41 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
 import { colors } from '../../theme';
 
 interface MovieOverviewProps {
   date: string;
   runtime?: number;
   ratings?: number;
-  episodes?: number;
 }
 
 const MovieOverview: React.FC<MovieOverviewProps> = ({
   date,
   runtime,
   ratings,
-  episodes,
-}) => {
-  return (
-    <View style={style.container}>
-      <View style={style.infoItems}>
-        <Text style={style.infoText}>
-          {new Date(date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </Text>
-      </View>
-      {runtime && (
-        <View style={style.infoItems}>
-          <Text style={style.infoText}>{runtime} Min</Text>
-        </View>
-      )}
-      <View style={style.infoItems}>
-        <Text style={style.infoText}>Rating: {ratings}</Text>
-      </View>
+}) => (
+  <View style={style.container}>
+    <View style={style.infoItems}>
+      <Text style={style.infoText}>
+        {new Date(date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </Text>
     </View>
-  );
-};
+    {runtime && (
+      <View style={style.infoItems}>
+        <Text style={style.infoText}>{runtime} Min</Text>
+      </View>
+    )}
+    <View style={style.infoItems}>
+      <Text style={style.infoText}>
+        Rating:
+        {ratings}
+      </Text>
+    </View>
+  </View>
+);
 
 const style = StyleSheet.create({
   container: {

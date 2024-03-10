@@ -1,12 +1,29 @@
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import MovieOverview from '../../components/MovieOverview/MovieOverview';
-import CastList from '../../components/CastList/CastList';
-import { movieDetails } from './test';
-import { colors, text } from '../../theme';
-import AsyncImage from '../../components/AsyncImage/AsyncImage';
 
-const MovieDetails = () => {
+import { useGetMovieDetailsQuery } from '../../api/slices/movieSlice';
+import AsyncImage from '../../components/AsyncImage/AsyncImage';
+import CastList from '../../components/CastList/CastList';
+import MovieOverview from '../../components/MovieOverview/MovieOverview';
+import { colors, text } from '../../theme';
+import { ApplicationScreenProps } from '../../types/navigation';
+import NotFound from '../NotFound/NotFound';
+
+const MovieDetails = ({ route }: ApplicationScreenProps) => {
+  const { id = '' } = route.params || {};
+
+  const {
+    data: movieDetails,
+    isLoading,
+    isError,
+  } = useGetMovieDetailsQuery(parseInt(id));
+
   const {
     title,
     release_date,
@@ -15,7 +32,30 @@ const MovieDetails = () => {
     overview,
     poster_path,
     casts,
-  } = movieDetails;
+  } = movieDetails ?? {};
+
+  if (!id || Number.isNaN(parseInt(id))) {
+    return <NotFound />;
+  }
+  if (isLoading) {
+    return (
+      <View style={Styles.detailsContainer}>
+        <ActivityIndicator
+          style={Styles.loadingIndicator}
+          size="large"
+          color={colors.gray100}
+        />
+      </View>
+    );
+  }
+  if (isError) {
+    return (
+      <View style={Styles.detailsContainer}>
+        <Text>Could not get data from Movie DB</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={Styles.detailsContainer}>
       <ScrollView>
@@ -44,7 +84,17 @@ const MovieDetails = () => {
 };
 
 const Styles = StyleSheet.create({
-  detailsContainer: { flex: 1, backgroundColor: colors.gray900 },
+  detailsContainer: {
+    flex: 1,
+    backgroundColor: colors.gray900,
+    justifyContent: 'center',
+  },
+  loadingIndicator: {
+    zIndex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 50,
+  },
   posterImage: {
     width: '80%',
     height: 400,

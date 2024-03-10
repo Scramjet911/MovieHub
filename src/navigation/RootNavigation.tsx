@@ -1,33 +1,31 @@
+import { DarkTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 
-import type { ApplicationStackParamList } from '../types/navigation';
 import { MovieCatalog, MovieDetails } from '../screens';
 import { colors } from '../theme';
+import type { ApplicationStackParamList } from '../types/navigation';
 
-const Stack = createStackNavigator<ApplicationStackParamList>();
+const { Navigator, Screen } = createStackNavigator<ApplicationStackParamList>();
 
-const RootNavigation = () => {
-  return (
-    <NavigationContainer
-      theme={{
-        dark: true,
-        colors: { ...DarkTheme.colors, background: colors.blue900 },
-      }}>
-      <Stack.Navigator screenOptions={{ headerShown: true }}>
-        <Stack.Screen
-          name="MovieCatalog"
-          component={MovieCatalog}
-          options={{ title: 'Movie Catalog' }}
-        />
-        <Stack.Screen
-          name="MovieDetails"
-          component={MovieDetails}
-          options={{ title: 'Movie Details' }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+const RootNavigation = () => (
+  <NavigationContainer
+    theme={{
+      dark: true,
+      colors: { ...DarkTheme.colors, background: colors.blue900 },
+    }}>
+    <Navigator screenOptions={{ headerShown: true }}>
+      <Screen
+        name="MovieCatalog"
+        component={MovieCatalog}
+        options={{ title: 'Movie Catalog' }}
+      />
+      <Screen
+        name="MovieDetails"
+        component={MovieDetails}
+        options={{ title: 'Movie Details' }}
+      />
+    </Navigator>
+  </NavigationContainer>
+);
 
 export default RootNavigation;

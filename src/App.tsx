@@ -1,7 +1,10 @@
+import AppProvider from './contexts/app';
 import RootNavigation from './navigation/RootNavigation';
 
-function App(): JSX.Element {
-  return <RootNavigation />;
-}
+const App = (): JSX.Element => (
+  <AppProvider>
+    <RootNavigation />
+  </AppProvider>
+);
 
 export default App;

@@ -1,4 +1,4 @@
-import { IMovieListItem } from '../../types/domain';
+import { IMovieListItem } from '../src/types/movie';
 
 const movieList: IMovieListItem[] = [
   {

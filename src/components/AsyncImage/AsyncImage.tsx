@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
 import {
-  View,
-  Image,
   ActivityIndicator,
+  Image,
   ImageProps,
-  StyleProp,
   ImageStyle,
+  StyleProp,
   StyleSheet,
   Text,
+  View,
 } from 'react-native';
+import React, { useState } from 'react';
+
 import { colors } from '../../theme';
 
 interface AsyncImageProps extends ImageProps {
@@ -19,6 +20,9 @@ interface AsyncImageProps extends ImageProps {
 const AsyncImage = ({ source, style, ...props }: AsyncImageProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const isError = error && source;
+  const isLoading = loading || !source;
 
   const handleOnLoad = () => {
     setLoading(false);
@@ -32,14 +36,17 @@ const AsyncImage = ({ source, style, ...props }: AsyncImageProps) => {
 
   return (
     <>
-      {loading && (
-        <ActivityIndicator
-          style={Styles.loadingIndicator}
-          size="large"
-          color={colors.gray100}
-        />
+      {isLoading ? (
+        <View style={[Styles.image, style]}>
+          <ActivityIndicator
+            style={Styles.loadingIndicator}
+            size="large"
+            color={colors.gray100}
+          />
+        </View>
+      ) : (
+        isError && <Text style={Styles.errorText}>Error loading image</Text>
       )}
-      {error && <Text style={Styles.errorText}>Error loading image</Text>}
       <Image
         source={source}
         style={[Styles.image, style]}
