@@ -1,5 +1,3 @@
-import { Text, TextStyle } from 'react-native';
-
 const primaryTextColor = '#ffffff';
 
 const text = {

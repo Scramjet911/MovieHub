@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { IMovieListItem } from '../../types/domain';
 import { colors } from '../../theme';
+import { IMovieListItem } from '../../types/movie';
 
 interface IMovieItem extends IMovieListItem {
   onSelectMovie: (id: string) => void;
@@ -12,23 +12,18 @@ const MovieItem = ({
   poster_path,
   vote_average,
   id,
-}: IMovieItem) => {
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => onSelectMovie(`${id}`)}>
-        <Image
-          style={styles.moviePoster}
-          source={{ uri: `https://image.tmdb.org/t/p/w500/${poster_path}` }}
-        />
-        <View style={styles.movieInfo}>
-          <Text style={styles.votes} ellipsizeMode="tail" numberOfLines={1}>
-            {vote_average}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
+}: IMovieItem) => (
+  <View style={styles.container}>
+    <TouchableOpacity onPress={() => onSelectMovie(`${id}`)}>
+      <Image style={styles.moviePoster} source={{ uri: poster_path }} />
+      <View style={styles.movieInfo}>
+        <Text style={styles.votes} ellipsizeMode="tail" numberOfLines={1}>
+          {vote_average}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {

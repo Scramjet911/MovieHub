@@ -1,0 +1,11 @@
+node_modules
+build
+coverage
+.bundle
+android
+ios
+index.js
+jest.config.js
+metro.config.js
+babel.config.js
+__tests__
