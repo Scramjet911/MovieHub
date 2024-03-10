@@ -1,3 +1,8 @@
+/**
+ * @fileoverview MovieList component displays an infinitely loading
+ * list of movies in a FlatList.
+ */
+
 import {
   ActivityIndicator,
   Dimensions,
@@ -6,7 +11,7 @@ import {
   View,
 } from 'react-native';
 
-import { IMovieListItem } from '../../types/movie';
+import { IMovieListItem } from '~/types/movie';
 import MovieItem from './MovieItem';
 
 interface IMovieListProps {
@@ -16,8 +21,15 @@ interface IMovieListProps {
   isLoading: boolean;
 }
 const { width } = Dimensions.get('window');
+// Calculating number of columns based on device width and item size
 const numColumns = Math.floor(width / (125 + 5 * 2));
 
+/**
+ * MovieList component
+ * @param {IMovieListProps} props - props containing
+ * data, onSelectMovie, fetchMoreMovies, and isLoading.
+ * @returns {JSX.Element} - A JSX.Element - the MovieList component.
+ */
 const MovieList = ({
   data,
   onSelectMovie,
@@ -25,6 +37,9 @@ const MovieList = ({
   isLoading,
 }: IMovieListProps) => (
   <View style={styles.flatListContainer}>
+    {/* FlatList to render a virtualized movie list for optimized rendering
+    It also has the logic of infinite loading, the fetchMoreMovies function
+    is called when the end is reached which allows for infinite loading */}
     <FlatList
       data={data}
       numColumns={numColumns}
@@ -34,6 +49,7 @@ const MovieList = ({
       )}
       showsVerticalScrollIndicator={false}
       onEndReached={fetchMoreMovies}
+      // Keeping a small threshold since users might not hit the end
       onEndReachedThreshold={0.1}
       ListFooterComponent={
         isLoading ? <ActivityIndicator size="large" /> : null

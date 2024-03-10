@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
 
-import { colors } from '../../theme';
+import { colors } from '~/theme';
 
 const NotFound = () => (
   <View style={Styles.container}>

@@ -6,4 +6,10 @@
     "__tests__",
     "__dummy_data__"
   ],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "~/*": ["*"]
+    }
+  }
 }

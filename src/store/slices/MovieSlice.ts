@@ -1,16 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IMovieListItem } from '../../types/movie';
+import { IMovieListItem } from '~/types/movie';
 
 interface MovieState {
-  selectedMovie: IMovieListItem | null;
   searchQuery: string | null;
   movieList: IMovieListItem[] | null;
   movieListPage: number;
 }
 
 const initialState: MovieState = {
-  selectedMovie: null,
   searchQuery: null,
   movieList: null,
   movieListPage: 0,
@@ -20,9 +18,6 @@ export const movieSlice = createSlice({
   name: 'movie',
   initialState,
   reducers: {
-    selectMovie(state, action: PayloadAction<IMovieListItem>) {
-      state.selectedMovie = action.payload;
-    },
     setSearchQuery(state, action: PayloadAction<string>) {
       state.searchQuery = action.payload;
     },
@@ -36,5 +31,5 @@ export const movieSlice = createSlice({
   },
 });
 
-export const { selectMovie, setSearchQuery, addMovies } = movieSlice.actions;
+export const { setSearchQuery, addMovies } = movieSlice.actions;
 export default movieSlice.reducer;

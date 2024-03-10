@@ -1,13 +1,21 @@
+/**
+ * @fileoverview RootNavigation component handles the navigation stack
+ * for the app. It utilizes React Navigation library for navigation management.
+ */
 import { DarkTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { MovieCatalog, MovieDetails } from '../screens';
-import { colors } from '../theme';
-import type { ApplicationStackParamList } from '../types/navigation';
+import { MovieCatalog, MovieDetails } from '~/screens';
+import { colors } from '~/theme';
+import type { ApplicationStackParamList } from '~/types/navigation';
 
 const { Navigator, Screen } = createStackNavigator<ApplicationStackParamList>();
 
-const RootNavigation = () => (
+/**
+ * RootNavigation component
+ * @returns {JSX.Element} Rendered component.
+ */
+const RootNavigation = (): JSX.Element => (
   <NavigationContainer
     theme={{
       dark: true,

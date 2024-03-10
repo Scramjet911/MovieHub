@@ -23,7 +23,7 @@ module.exports = {
     sourceType: 'module',
   },
 
-  plugins: ['simple-import-sort'],
+  plugins: ['simple-import-sort', 'import'],
   rules: {
     'no-param-reassign': [2, { props: false }],
     'react/react-in-jsx-scope': 'off',
@@ -70,6 +70,14 @@ module.exports = {
     ],
     '@typescript-eslint/naming-convention': 'off',
   },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [['~', './src/']],
+        extensions: ['.ts', '.js', '.tsx'],
+      },
+    },
+  },
   overrides: [
     {
       files: ['**/*.ts?(x)'],
@@ -83,7 +91,7 @@ module.exports = {
               // or `@` followed by a letter.
               ['^react-native', '^@?\\w'],
               // Absolute imports and Relative imports.
-              [`^@(${folders.join('|')})(/.*|$)`, '^\\.'],
+              [`^~/(${folders.join('|')})(/.*|$)`, '^\\.'],
               ['^[^.]'],
             ],
           },
