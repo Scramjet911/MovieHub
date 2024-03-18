@@ -122,6 +122,9 @@ __dummy_data__
 - [x] Search functionality
 - [x] Absolute imports
 - [x] UI Improvements
+- [ ] Toast on errors
+- [ ] Consistent styling (ScaledSheet everywhere)
 - [ ] Icon pack, icons for current features
 - [ ] Error handling (Complete)
+- [ ] Improve documentation
 - [ ] Unit tests
