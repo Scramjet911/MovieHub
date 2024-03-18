@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
     elevation: 4,
-    margin: 10,
-    width: 125,
-    height: 230,
+    margin: 5,
+    width: 120,
+    height: 220,
   },
   movieInfo: {
     alignItems: 'center',
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
   moviePoster: {
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
-    height: 200,
-    width: 125,
+    width: 120,
+    height: 190,
   },
   votes: {
     color: colors.gray100,

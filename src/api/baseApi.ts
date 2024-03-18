@@ -4,25 +4,43 @@
  * a base query for fetching data from a given API endpoint
  * with required authorization headers.
  */
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+  retry,
+} from '@reduxjs/toolkit/query/react';
 
 import config from '~/config';
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: `${config.FETCH_API_ENDPOINT}/`,
-  // Setting authorization header
-  prepareHeaders(headers) {
-    headers.set('Authorization', `Bearer ${config.ACCESS_TOKEN}` || '');
-    return headers;
+const baseQueryWithRetries = retry(
+  async (args: string | FetchArgs, api, extraOptions) => {
+    const result = await fetchBaseQuery({
+      baseUrl: `${config.FETCH_API_ENDPOINT}/`,
+      // Setting authorization header
+      prepareHeaders(headers) {
+        headers.set('Authorization', `Bearer ${config.ACCESS_TOKEN}` || '');
+        return headers;
+      },
+    })(args, api, extraOptions);
+
+    // bail out of re-tries immediately if unauthorized,
+    // because we know successive re-retries would be redundant
+    if (result.error?.status === 401) {
+      retry.fail(result.error);
+    }
+
+    return result;
   },
-});
+  { maxRetries: 3 },
+);
 
 // Creating API instance using createApi
 const baseApi = createApi({
   reducerPath: 'api',
-  baseQuery,
+  baseQuery: baseQueryWithRetries,
   endpoints: () => ({}),
-  tagTypes: ['MovieList', 'MovieDetails'],
+  tagTypes: ['MovieList', 'MovieDetails', 'SearchMovie'],
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
 });

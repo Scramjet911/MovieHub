@@ -119,6 +119,9 @@ __dummy_data__
 - [x] Eslint Airbnb rule usage
 - [x] Error handling (Basic)
 - [x] Loading States
-- [ ] Search functionality
+- [x] Search functionality
+- [x] Absolute imports
+- [x] UI Improvements
+- [ ] Icon pack, icons for current features
 - [ ] Error handling (Complete)
 - [ ] Unit tests

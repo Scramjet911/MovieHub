@@ -19,9 +19,9 @@ const RootNavigation = (): JSX.Element => (
   <NavigationContainer
     theme={{
       dark: true,
-      colors: { ...DarkTheme.colors, background: colors.blue900 },
+      colors: { ...DarkTheme.colors, background: colors.gray900 },
     }}>
-    <Navigator screenOptions={{ headerShown: true }}>
+    <Navigator screenOptions={{ headerShown: false }}>
       <Screen
         name="MovieCatalog"
         component={MovieCatalog}
@@ -30,7 +30,7 @@ const RootNavigation = (): JSX.Element => (
       <Screen
         name="MovieDetails"
         component={MovieDetails}
-        options={{ title: 'Movie Details' }}
+        options={{ title: 'Movie Details', headerShown: true }}
       />
     </Navigator>
   </NavigationContainer>

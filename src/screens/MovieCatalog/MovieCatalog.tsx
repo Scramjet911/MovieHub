@@ -5,14 +5,18 @@
  * "Not Found" component based on the fetched data.
  */
 import { ActivityIndicator } from 'react-native';
-import { useCallback, useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { useLazyGetMoviesQuery } from '~/api/slices/movieSlice';
+import {
+  useLazyGetMoviesQuery,
+  useLazySearchMoviesQuery,
+} from '~/api/slices/movieSlice';
 import { MovieList } from '~/components';
 import { NotFound } from '~/components/common';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { addMovies } from '~/store/slices/MovieSlice';
+import { setSearchQuery } from '~/store/slices/movieSlice';
 import { ApplicationScreenProps } from '~/types/navigation';
+import debounce from '~/utils/debounce';
 
 /**
  * MovieCatalog component
@@ -21,8 +25,19 @@ import { ApplicationScreenProps } from '~/types/navigation';
  */
 const MovieCatalog = ({ navigation }: ApplicationScreenProps): JSX.Element => {
   const [getMovies, { isLoading }] = useLazyGetMoviesQuery();
-  const { movieList, movieListPage } = useAppSelector(state => state.movie);
+  const [getSearchedMovie] = useLazySearchMoviesQuery();
+  const { movieList, movieListPage, searchQuery } = useAppSelector(
+    state => state.movie,
+  );
   const dispatch = useAppDispatch();
+  const debouncedSearch = useMemo(
+    () =>
+      debounce(
+        (query: string) => getSearchedMovie({ searchTerm: query, page: 1 }),
+        400,
+      ),
+    [getSearchedMovie],
+  );
 
   /**
    * Callback function to navigate to MovieDetails screen.
@@ -32,18 +47,33 @@ const MovieCatalog = ({ navigation }: ApplicationScreenProps): JSX.Element => {
     navigation.navigate('MovieDetails', { id });
   };
 
-  const fetchMovieList = useCallback(async () => {
-    // Fetching next page of movies
-    const result = await getMovies(movieListPage + 1);
-    if (result?.data?.results) {
-      // Adding fetched movies to Redux store
-      dispatch(addMovies(result.data?.results));
+  const onSearchMovie = (query: string) => {
+    dispatch(setSearchQuery(query));
+    if (query) {
+      debouncedSearch(query);
+    } else {
+      getMovies(movieListPage + 1);
     }
-  }, [dispatch, getMovies, movieListPage]);
+  };
+
+  const fetchMovieList = async () => {
+    // Fetching next page of movies
+    if (searchQuery) {
+      getSearchedMovie({ searchTerm: searchQuery, page: movieListPage + 1 });
+    } else {
+      getMovies(movieListPage + 1);
+    }
+  };
 
   // Fetching movie list on component mount
   useEffect(() => {
-    fetchMovieList();
+    if (!searchQuery) {
+      if (!movieListPage) {
+        fetchMovieList();
+      }
+    } else {
+      getSearchedMovie({ searchTerm: searchQuery, page: movieListPage });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -55,9 +85,10 @@ const MovieCatalog = ({ navigation }: ApplicationScreenProps): JSX.Element => {
   return movieList && movieList.length > 0 ? (
     <MovieList
       data={movieList}
-      onSelectMovie={onSelectMovie}
       fetchMoreMovies={fetchMovieList}
       isLoading
+      onSearchMovie={onSearchMovie}
+      onSelectMovie={onSelectMovie}
     />
   ) : (
     <NotFound />

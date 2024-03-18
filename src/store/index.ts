@@ -3,12 +3,14 @@ import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 
 import baseApi from '../api/baseApi';
 import storeLogger from './logger';
-import { movieSlice } from './slices/MovieSlice';
+import { movieSlice } from './slices/movieSlice';
+// import { toastSlice } from './slices/toastSlice';
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     [movieSlice.name]: movieSlice.reducer,
+    // [toastSlice.name]: toastSlice.reducer,
   },
   middleware: getDefaultMiddleware => {
     const list = [baseApi.middleware];

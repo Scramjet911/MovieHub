@@ -19,3 +19,8 @@ export interface IFetchMoviesResponse {
   page: number;
   results: IMovieListItem[];
 }
+
+export interface ISearchMovieParams {
+  searchTerm: string;
+  page: number;
+}

@@ -5,7 +5,11 @@
  * so they can be used directly in the UI elements
  */
 import config from '~/config';
-import { IFetchMoviesResponse, IMovieListItem } from '~/types/movie';
+import {
+  IFetchMoviesResponse,
+  IMovieListItem,
+  ISearchMovieParams,
+} from '~/types/movie';
 import { IFetchMovieDetailsResponse, IMovieData } from '~/types/movieDetails';
 import baseApi from '../baseApi';
 
@@ -22,6 +26,23 @@ export const extendedMovieQuery = baseApi.injectEndpoints({
        * @param {IFetchMoviesResponse} response - response with movie data.
        * @returns {IFetchMoviesResponse} - Returns transformed response object.
        */
+      transformResponse: (response: IFetchMoviesResponse) => ({
+        ...response,
+        results: response.results.map((movie: IMovieListItem) => ({
+          ...movie,
+          poster_path: `${config.IMAGE_API_ENDPOINT}w500${movie.poster_path}`,
+          backdrop_path: `${config.IMAGE_API_ENDPOINT}w500${movie.backdrop_path}`,
+        })),
+      }),
+    }),
+    searchMovies: builder.query<IFetchMoviesResponse, ISearchMovieParams>({
+      query: ({ searchTerm, page }: ISearchMovieParams) => ({
+        url: 'search/movie',
+        params: {
+          query: searchTerm,
+          page,
+        },
+      }),
       transformResponse: (response: IFetchMoviesResponse) => ({
         ...response,
         results: response.results.map((movie: IMovieListItem) => ({
@@ -66,4 +87,5 @@ export const {
   useLazyGetMoviesQuery,
   useGetMovieDetailsQuery,
   useLazyGetMovieDetailsQuery,
+  useLazySearchMoviesQuery,
 } = extendedMovieQuery;

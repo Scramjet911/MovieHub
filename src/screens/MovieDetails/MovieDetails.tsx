@@ -101,7 +101,6 @@ const MovieDetails = ({ route }: ApplicationScreenProps): JSX.Element => {
 const Styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
-    backgroundColor: colors.gray900,
     justifyContent: 'center',
   },
   loadingIndicator: {

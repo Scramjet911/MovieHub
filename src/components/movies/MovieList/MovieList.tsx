@@ -5,24 +5,26 @@
 
 import {
   ActivityIndicator,
-  Dimensions,
+  // Dimensions,
   FlatList,
   StyleSheet,
   View,
 } from 'react-native';
 
 import { IMovieListItem } from '~/types/movie';
+import ListHeader from './ListHeader';
 import MovieItem from './MovieItem';
 
 interface IMovieListProps {
   data: IMovieListItem[];
-  onSelectMovie: (id: string) => void;
   fetchMoreMovies: () => void;
   isLoading: boolean;
+  onSelectMovie: (id: string) => void;
+  onSearchMovie: (query: string) => void;
 }
-const { width } = Dimensions.get('window');
+// const { width } = Dimensions.get('window');
 // Calculating number of columns based on device width and item size
-const numColumns = Math.floor(width / (125 + 5 * 2));
+// const numColumns = Math.floor(width / (125 + 5 * 2));
 
 /**
  * MovieList component
@@ -32,17 +34,19 @@ const numColumns = Math.floor(width / (125 + 5 * 2));
  */
 const MovieList = ({
   data,
-  onSelectMovie,
   fetchMoreMovies,
   isLoading,
+  onSelectMovie,
+  onSearchMovie,
 }: IMovieListProps) => (
   <View style={styles.flatListContainer}>
     {/* FlatList to render a virtualized movie list for optimized rendering
     It also has the logic of infinite loading, the fetchMoreMovies function
     is called when the end is reached which allows for infinite loading */}
     <FlatList
+      ListHeaderComponent={<ListHeader onSearchMovie={onSearchMovie} />}
       data={data}
-      numColumns={numColumns}
+      numColumns={3}
       keyExtractor={(item: IMovieListItem) => `${item.id}`}
       renderItem={({ item }) => (
         <MovieItem onSelectMovie={onSelectMovie} {...item} />

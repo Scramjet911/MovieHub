@@ -4,7 +4,8 @@
     "src",
     ".eslintrc.js",
     "__tests__",
-    "__dummy_data__"
+    "__dummy_data__",
+    "declarations.d.ts"
   ],
   "compilerOptions": {
     "baseUrl": "./src",
